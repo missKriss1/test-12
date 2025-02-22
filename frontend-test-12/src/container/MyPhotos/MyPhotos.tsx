@@ -1,13 +1,19 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectLoading, selectPhoto } from '../../features/photos/photosSlice.ts';
-import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
-import { deletedPhoto, fetchMyPhotos } from '../../features/photos/photosThunk.ts';
-import Spinner from '../../components/UI/Spinner/Spinner.tsx';
-import { Box } from '@mui/material';
-import Grid from '@mui/material/Grid2';
-import PhotoItem from '../../components/PhotoItem/PhotoItem.tsx';
-import Typography from '@mui/material/Typography';
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import {
+  selectLoading,
+  selectPhoto,
+} from "../../features/photos/photosSlice.ts";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  deletedPhoto,
+  fetchMyPhotos,
+} from "../../features/photos/photosThunk.ts";
+import Spinner from "../../components/UI/Spinner/Spinner.tsx";
+import { Box } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import PhotoItem from "../../components/PhotoItem/PhotoItem.tsx";
+import Typography from "@mui/material/Typography";
 
 const MyPhotos = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +32,7 @@ const MyPhotos = () => {
   const deletePhotoById = async (id: string) => {
     try {
       await dispatch(deletedPhoto(id));
-      await  dispatch(fetchMyPhotos(id));
+      await dispatch(fetchMyPhotos(id));
     } catch (error) {
       console.error(error);
     }
@@ -34,18 +40,18 @@ const MyPhotos = () => {
   return (
     <div>
       {loading ? (
-        <Spinner/>
-      ):(
+        <Spinner />
+      ) : (
         <>
           {photos.length > 0 ? (
-            <Box sx={{padding: 2}}>
-              <h2 style={ { color: 'darkviolet', marginLeft: '10px'}}>
+            <Box sx={{ padding: 2 }}>
+              <h2 style={{ color: "darkviolet", marginLeft: "10px" }}>
                 My photos
               </h2>
               <Grid container spacing={2}>
                 {photos.map((photo) => (
-                  <Grid size={{xs: 6, md: 4}} key={photo._id}>
-                    <PhotoItem photo={photo} deletePhoto={deletePhotoById}/>
+                  <Grid size={{ xs: 6, md: 4 }} key={photo._id}>
+                    <PhotoItem photo={photo} deletePhoto={deletePhotoById} />
                   </Grid>
                 ))}
               </Grid>

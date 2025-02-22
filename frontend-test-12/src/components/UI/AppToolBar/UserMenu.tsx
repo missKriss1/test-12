@@ -4,10 +4,10 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../../app/hooks.ts";
 import { User } from "../../../types";
-import { apiUrl } from '../../../../globalConstants.ts';
-import { logout } from '../../../features/user/userThunk.ts';
-import { unsetUser } from '../../../features/user/userSlice.ts';
-import zaglushkaAvatar from "/src/assets/zaglushkaAvatar.jpg"
+import { apiUrl } from "../../../../globalConstants.ts";
+import { logout } from "../../../features/user/userThunk.ts";
+import { unsetUser } from "../../../features/user/userSlice.ts";
+import zaglushkaAvatar from "/src/assets/zaglushkaAvatar.jpg";
 
 interface Props {
   user: User;
@@ -37,7 +37,15 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     <div>
       <NavLink
         to={"/add_new_photo"}
-        style={{ fontSize:"1.0rem", textDecoration: "none", border:'1px solid white', padding:'6px 8px', color: "inherit", marginTop: "10px", marginRight:'20px' }}
+        style={{
+          fontSize: "1.0rem",
+          textDecoration: "none",
+          border: "1px solid white",
+          padding: "6px 8px",
+          color: "inherit",
+          marginTop: "10px",
+          marginRight: "20px",
+        }}
       >
         Add new photo
       </NavLink>
@@ -60,7 +68,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
               to={`/photos?user=${user._id}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-             My photos
+              My photos
             </NavLink>
           </MenuItem>
         </div>

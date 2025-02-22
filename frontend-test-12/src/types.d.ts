@@ -39,15 +39,14 @@ export interface GlobalError {
   error: string;
 }
 
-export interface Photo{
+export interface Photo {
   _id: string;
   user: User;
   title: string;
   image: string;
 }
 
-export interface PhotoMutation{
+export interface PhotoMutation {
   title: string;
   image: File | null;
-
 }

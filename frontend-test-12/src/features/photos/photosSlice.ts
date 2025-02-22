@@ -1,9 +1,14 @@
-import { Photo, ValidationError } from '../../types';
-import { createSlice } from '@reduxjs/toolkit';
-import { addNewPhoto, fetchMyPhotos, fetchPhotos, fetchPhotoslById } from './photosThunk.ts';
-import { RootState } from '../../app/store.ts';
+import { Photo, ValidationError } from "../../types";
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  addNewPhoto,
+  fetchMyPhotos,
+  fetchPhotos,
+  fetchPhotoslById,
+} from "./photosThunk.ts";
+import { RootState } from "../../app/store.ts";
 
-interface photosState{
+interface photosState {
   photos: Photo[];
   photoByUser: Photo[];
   fetchingLoading: boolean;
@@ -19,19 +24,21 @@ const initialState: photosState = {
   creatingLoading: false,
   fetchError: false,
   creatingError: null,
-}
+};
 
-export const selectPhoto = (state: RootState) => state.photos.photos
+export const selectPhoto = (state: RootState) => state.photos.photos;
 export const selectPhotoByUser = (state: RootState) => state.photos.photoByUser;
-export const selectCreatLoading = (state: RootState) => state.photos.creatingLoading
-export const selectErrorCreat = (state: RootState) => state.photos.creatingError
-export const selectLoading = (state: RootState) => state.photos.fetchingLoading
+export const selectCreatLoading = (state: RootState) =>
+  state.photos.creatingLoading;
+export const selectErrorCreat = (state: RootState) =>
+  state.photos.creatingError;
+export const selectLoading = (state: RootState) => state.photos.fetchingLoading;
 
 const photosSlice = createSlice({
   name: "photos",
   initialState,
   reducers: {},
-  extraReducers:(builder) =>{
+  extraReducers: (builder) => {
     builder
       .addCase(fetchPhotos.pending, (state) => {
         state.fetchingLoading = true;
@@ -75,8 +82,8 @@ const photosSlice = createSlice({
       })
       .addCase(fetchMyPhotos.rejected, (state) => {
         state.fetchError = true;
-      })
-  }
-})
+      });
+  },
+});
 
 export const photosReducer = photosSlice.reducer;

@@ -99,7 +99,7 @@ const RegisterUser = () => {
                   onChange={inpytChangeHandler}
                   helperText={getFielderror("Email")}
                   style={{
-                    marginTop:'10px',
+                    marginTop: "10px",
                     backgroundColor: "white",
                     borderRadius: "7px",
                     cursor: "pointer",
@@ -125,7 +125,7 @@ const RegisterUser = () => {
                   onChange={inpytChangeHandler}
                   helperText={getFielderror("password")}
                   style={{
-                    marginTop:'10px',
+                    marginTop: "10px",
                     backgroundColor: "white",
                     borderRadius: "7px",
                     cursor: "pointer",
@@ -151,7 +151,7 @@ const RegisterUser = () => {
                   onChange={inpytChangeHandler}
                   helperText={getFielderror("displayName")}
                   style={{
-                    marginTop:'10px',
+                    marginTop: "10px",
                     backgroundColor: "white",
                     borderRadius: "7px",
                     cursor: "pointer",

@@ -31,7 +31,7 @@ const AnonimysMenu = () => {
           borderRadius: "12px",
           cursor: "pointer",
           fontWeight: "bold",
-          marginLeft:'20px',
+          marginLeft: "20px",
           transition: "background-color 0.3s ease",
         }}
       >

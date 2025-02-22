@@ -1,29 +1,32 @@
-import { useEffect, useState } from 'react';
-import { PhotoMutation } from '../../types';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectUser } from '../../features/user/userSlice.ts';
-import { useNavigate } from 'react-router-dom';
-import { addNewPhoto } from '../../features/photos/photosThunk.ts';
-import { Box } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import FileInput from '../../components/FileInput.tsx';
-import ButtonLoading from '../../components/UI/ButtonLoading/ButtonLoading.tsx';
-import { selectCreatLoading, selectErrorCreat } from '../../features/photos/photosSlice.ts';
+import { useEffect, useState } from "react";
+import { PhotoMutation } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import { selectUser } from "../../features/user/userSlice.ts";
+import { useNavigate } from "react-router-dom";
+import { addNewPhoto } from "../../features/photos/photosThunk.ts";
+import { Box } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import FileInput from "../../components/FileInput.tsx";
+import ButtonLoading from "../../components/UI/ButtonLoading/ButtonLoading.tsx";
+import {
+  selectCreatLoading,
+  selectErrorCreat,
+} from "../../features/photos/photosSlice.ts";
 
-const initialState ={
-  title: '',
-  image:  null
-}
+const initialState = {
+  title: "",
+  image: null,
+};
 const FromPhoto = () => {
-  const [form, setForm] = useState<PhotoMutation>({...initialState});
-  const dispatch = useAppDispatch()
-  const user = useAppSelector(selectUser)
+  const [form, setForm] = useState<PhotoMutation>({ ...initialState });
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const navigate = useNavigate();
   const selectError = useAppSelector(selectErrorCreat);
-  const selectLoading = useAppSelector(selectCreatLoading)
+  const selectLoading = useAppSelector(selectCreatLoading);
 
   useEffect(() => {
-    if(!user) navigate('/register')
+    if (!user) navigate("/register");
   }, [navigate, user]);
 
   const onFormSubmit = async (e: React.FormEvent) => {
@@ -37,9 +40,7 @@ const FromPhoto = () => {
     }
   };
 
-  const onInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prevState: PhotoMutation) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -70,7 +71,7 @@ const FromPhoto = () => {
     <div>
       <div>
         <h2 className="text-center mt-4 ">Add new cocktail</h2>
-        <div style={{maxWidth: "600px", margin: "0 auto", padding: "20px"}}>
+        <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
           <Box
             component="form"
             sx={{

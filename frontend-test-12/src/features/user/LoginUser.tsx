@@ -118,7 +118,7 @@ const LoginUser = () => {
                   value={form.password}
                   onChange={inpytChangeHandler}
                   style={{
-                    marginTop:'10px',
+                    marginTop: "10px",
                     backgroundColor: "white",
                     borderRadius: "7px",
                     cursor: "pointer",
