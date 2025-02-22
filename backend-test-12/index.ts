@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from "mongoose";
 import config from "./config";
 import userRouter from "./routers/users";
+import photosRouter from "./routers/photos";
 
 const app = express();
 const port = 8000;
@@ -11,7 +12,8 @@ const port = 8000;
 app.use(express.json());
 app.use(cors())
 app.use(express.static("public"));
-app.use('/users', userRouter)
+app.use('/users', userRouter);
+app.use('/photos', photosRouter)
 
 
 const run = async () => {
