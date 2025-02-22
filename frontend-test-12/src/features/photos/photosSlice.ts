@@ -1,4 +1,4 @@
-import { Photo } from '../../types';
+import { GlobalError, Photo } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchPhotos, fetchPhotoslById } from './photosThunk.ts';
 import { RootState } from '../../app/store.ts';
@@ -9,6 +9,7 @@ interface photosState{
   fetchingLoading: boolean;
   creatingLoading: boolean;
   fetchError: boolean;
+  creatingError: GlobalError | null;
 }
 
 const initialState: photosState = {
@@ -17,10 +18,13 @@ const initialState: photosState = {
   fetchingLoading: false,
   creatingLoading: false,
   fetchError: false,
+  creatingError: null,
 }
 
 export const selectPhoto = (state: RootState) => state.photos.photos
-export const selectPhotoByUser = (state: RootState) => state.photos.photoByUser
+export const selectPhotoByUser = (state: RootState) => state.photos.photoByUser;
+export const selectCreatLoading = (state: RootState) => state.photos.creatingLoading
+export const selectErrorCreat = (state: RootState) => state.photos.creatingError
 
 const photosSlice = createSlice({
   name: "photos",

@@ -51,10 +51,10 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <MenuItem onClick={hendelClose}>
             <NavLink
-              to={"/add_new_cocktail"}
+              to={"/add_new_photo"}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              Add new
+              Add new photo
             </NavLink>
           </MenuItem>
         </div>

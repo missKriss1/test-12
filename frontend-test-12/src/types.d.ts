@@ -46,9 +46,8 @@ export interface Photo{
   image: string;
 }
 
-export interface PhotoModal {
-  _id: string;
-  user: User;
+export interface PhotoMutation{
   title: string;
   image: File | null;
+
 }
