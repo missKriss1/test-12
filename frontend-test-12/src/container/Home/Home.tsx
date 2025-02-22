@@ -22,8 +22,7 @@ const Home = () => {
           <Grid container spacing={2}>
             {photos.map((photo) => (
               <Grid size={{xs: 6, md: 4}} key={photo._id}>
-                <PhotoItem photo={photo} deletePhoto={() => {
-                }}/>
+                <PhotoItem photo={photo} deletePhoto={() => {}}/>
               </Grid>
             ))}
           </Grid>

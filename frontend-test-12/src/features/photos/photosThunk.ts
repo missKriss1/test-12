@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import { PhotoModal } from '../../types';
+
 
 export const fetchPhotos = createAsyncThunk(
   'photos/fetchPhotos',
@@ -10,11 +10,11 @@ export const fetchPhotos = createAsyncThunk(
   }
 )
 
-export const fetchPhotoslById = createAsyncThunk<PhotoModal, string>(
+export const fetchPhotoslById = createAsyncThunk(
   "photos/fetchPhotoslById",
-  async (photolId) => {
-    const response = await axiosApi.get<PhotoModal>(
-      `/photos/${photolId}`,
+  async (id: string) => {
+    const response = await axiosApi.get(
+      `/photos/users/${id}`,
     );
     return response.data;
   },

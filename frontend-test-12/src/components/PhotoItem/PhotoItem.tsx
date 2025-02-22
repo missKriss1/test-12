@@ -11,9 +11,10 @@ import React from 'react';
 interface Props {
   photo: Photo;
   deletePhoto: (id: string) => void;
+  idUser: string
 }
 
-const PhotoItem: React.FC<Props> = ({ photo, deletePhoto }) => {
+const PhotoItem: React.FC<Props> = ({ photo, deletePhoto, idUser }) => {
   const userSelect = useAppSelector(selectUser);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -103,7 +104,7 @@ const PhotoItem: React.FC<Props> = ({ photo, deletePhoto }) => {
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              deletePhoto(photo._id);
+              deletePhoto(idUser);
             }}
             sx={{
               position: "absolute",

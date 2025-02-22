@@ -1,11 +1,11 @@
-import { Photo, PhotoModal } from '../../types';
+import { Photo } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchPhotos, fetchPhotoslById } from './photosThunk.ts';
 import { RootState } from '../../app/store.ts';
 
 interface photosState{
   photos: Photo[];
-  photoDet: PhotoModal | null;
+  photoByUser: Photo[];
   fetchingLoading: boolean;
   creatingLoading: boolean;
   fetchError: boolean;
@@ -13,14 +13,14 @@ interface photosState{
 
 const initialState: photosState = {
   photos: [],
-  photoDet: null,
+  photoByUser: [],
   fetchingLoading: false,
   creatingLoading: false,
   fetchError: false,
 }
 
 export const selectPhoto = (state: RootState) => state.photos.photos
-export const selectPhotoDet = (state: RootState) => state.photos.photoDet
+export const selectPhotoByUser = (state: RootState) => state.photos.photoByUser
 
 const photosSlice = createSlice({
   name: "photos",
@@ -45,7 +45,7 @@ const photosSlice = createSlice({
       })
       .addCase(fetchPhotoslById.fulfilled, (state, { payload: photos }) => {
         state.fetchingLoading = false;
-        state.photoDet = photos;
+        state.photoByUser = photos;
       })
       .addCase(fetchPhotoslById.rejected, (state) => {
         state.fetchError = true;
