@@ -51,3 +51,14 @@ export const fetchPhotoslById = createAsyncThunk(
     return response.data;
   },
 );
+
+export const deletedPhoto = createAsyncThunk<
+  void,
+  string,
+  { state: RootState }
+>("photos/deletedPhoto", async (id: string, { getState }) => {
+  const token = getState().users.user?.token;
+  await axiosApi.delete(`/photos/${id}`, {
+    headers: { Authorization: token },
+  });
+});

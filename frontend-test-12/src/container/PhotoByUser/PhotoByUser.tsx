@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectPhotoByUser } from '../../features/photos/photosSlice.ts';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { fetchPhotoslById } from '../../features/photos/photosThunk.ts';
+import { deletedPhoto, fetchPhotoslById } from '../../features/photos/photosThunk.ts';
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import PhotoItem from '../../components/PhotoItem/PhotoItem.tsx';
@@ -16,6 +16,15 @@ const PhotoByUser = () => {
   useEffect(() => {
     dispatch(fetchPhotoslById(id))
   }, [dispatch, id]);
+
+  const deletePhotoById = async (idPhoto: string) => {
+    try {
+      await dispatch(deletedPhoto(idPhoto));
+      await dispatch(fetchPhotoslById(id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       {photoUser.length > 0 ? (
@@ -29,8 +38,7 @@ const PhotoByUser = () => {
           <Grid container spacing={2}>
             {photoUser.map((photo) => (
               <Grid size={{xs: 6, md: 4}} key={photo._id}>
-                <PhotoItem photo={photo} deletePhoto={() => {
-                }} idUser={id}/>
+                <PhotoItem photo={photo} deletePhoto={deletePhotoById} idUser={id}/>
               </Grid>
             ))}
           </Grid>

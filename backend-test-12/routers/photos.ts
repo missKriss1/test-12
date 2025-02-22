@@ -36,7 +36,7 @@ photosRouter.post('/', auth, imagesUpload.single("image"), async (req, res, next
 photosRouter.get("/", async (req, res, next) => {
     try{
         const photos = await Photo.find().populate('user')
-        res.send(photos);
+        res.send(photos.reverse());
     }catch(e){
         next(e);
     }
@@ -48,7 +48,7 @@ photosRouter.get('/users/:id', async (req, res, next) => {
             res.status(400).send({error: "Id is missing"});
         }
         const photoUser = await Photo.find({user: req.params.id}).populate('user');
-        res.send(photoUser);
+        res.send(photoUser.reverse());
     }catch(e){
         next(e);
     }

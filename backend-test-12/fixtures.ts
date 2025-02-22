@@ -89,7 +89,7 @@ const run = async () => {
         {
             user: user2._id,
             title: 'Minions',
-            image: "fixtures/cocktails/minions.jpg",
+            image: "fixtures/photo/minions.jpg",
         }
     ]);
 

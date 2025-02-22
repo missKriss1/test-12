@@ -1,5 +1,5 @@
 import { Photo } from '../../types';
-import { useAppSelector } from '../../app/hooks.ts';
+import {  useAppSelector } from '../../app/hooks.ts';
 import { selectUser } from '../../features/user/userSlice.ts';
 import { Button, Card, CardContent, CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -104,7 +104,7 @@ const PhotoItem: React.FC<Props> = ({ photo, deletePhoto, idUser }) => {
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              deletePhoto(idUser);
+              deletePhoto(photo._id);
             }}
             sx={{
               position: "absolute",
