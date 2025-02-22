@@ -5,6 +5,8 @@ import { Button, Card, CardContent, CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../../../globalConstants.ts';
+import ModelWindow from '../UI/ModelWindow/ModelWindow.tsx';
+import React from 'react';
 
 interface Props {
   photo: Photo;
@@ -13,6 +15,18 @@ interface Props {
 
 const PhotoItem: React.FC<Props> = ({ photo, deletePhoto }) => {
   const userSelect = useAppSelector(selectUser);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const handleOpenModal = () => {
+    console.log('Opening modal');
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    console.log('Closing modal');
+    setIsModalOpen(false);
+  }
+
   let imagePhoto;
 
   if (photo.image) {
@@ -44,18 +58,35 @@ const PhotoItem: React.FC<Props> = ({ photo, deletePhoto }) => {
           }}
           image={imagePhoto}
           alt={photo.title}
+          onClick={handleOpenModal}
         />
+        <ModelWindow title={photo.title} image={photo.image} open={isModalOpen} onClose={handleCloseModal} />
 
-        <Link
-          to={`/cocktails/${photo._id}`}
-          style={{ textDecoration: "none", marginTop: 1, }}
+        <Button
+          onClick={handleOpenModal}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            width: '100%',
+            marginTop: 1,
+            padding: '10px',
+            backgroundColor: 'transparent',
+          }}
         >
-          <CardContent sx={{ position: "relative", textAlign: "center", marginBottom: '10px' }}>
-            <Typography gutterBottom variant="h6" component="div" sx={{ color: "darkviolet", textDecoration: "underline", }}>
-              {photo.title}
-            </Typography>
-          </CardContent>
-        </Link>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "darkviolet",
+              textDecoration: "underline",
+              textAlign: 'center',
+              width: '100%',
+            }}
+          >
+            {photo.title}
+          </Typography>
+        </Button>
 
         <Link
           to={`/photos/user/${photo.user._id}`}

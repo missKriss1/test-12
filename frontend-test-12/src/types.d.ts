@@ -45,3 +45,10 @@ export interface Photo{
   title: string;
   image: string;
 }
+
+export interface PhotoModal {
+  _id: string;
+  user: User;
+  title: string;
+  image: File | null;
+}
