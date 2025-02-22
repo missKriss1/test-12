@@ -25,6 +25,7 @@ export const selectPhoto = (state: RootState) => state.photos.photos
 export const selectPhotoByUser = (state: RootState) => state.photos.photoByUser;
 export const selectCreatLoading = (state: RootState) => state.photos.creatingLoading
 export const selectErrorCreat = (state: RootState) => state.photos.creatingError
+export const selectLoading = (state: RootState) => state.photos.fetchingLoading
 
 const photosSlice = createSlice({
   name: "photos",
