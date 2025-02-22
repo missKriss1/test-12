@@ -7,6 +7,8 @@ interface Props {
   file: File | null;
   id: string;
   className?: string;
+  error?: boolean;
+  helperText?: string;
 }
 
 const FileInput: React.FC<Props> = ({
@@ -16,6 +18,9 @@ const FileInput: React.FC<Props> = ({
   file,
   id,
   className,
+  error,
+  helperText
+
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState("");
@@ -74,6 +79,12 @@ const FileInput: React.FC<Props> = ({
           <i className="bi bi-file-earmark"></i>
         </button>
       </div>
+
+      {error && helperText && (
+        <div style={{ color: 'red', fontSize: '12px' }}>
+          {helperText}
+        </div>
+      )}
     </>
   );
 };

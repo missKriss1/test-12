@@ -108,6 +108,8 @@ const FromPhoto = () => {
                 label="Photo"
                 onGetFile={onFileChange}
                 file={form.image}
+                error={!!getFieldError("image")}
+                helperText={getFieldError("image")}
               />
             </div>
 
