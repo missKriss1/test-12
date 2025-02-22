@@ -1,31 +1,36 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectLoading, selectPhoto } from '../../features/photos/photosSlice.ts';
+import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { deletedPhoto, fetchPhotos } from '../../features/photos/photosThunk.ts';
-import PhotoItem from '../../components/PhotoItem/PhotoItem.tsx';
-import Grid from "@mui/material/Grid2";
-import Typography from '@mui/material/Typography';
-import { Box } from '@mui/material';
+import { deletedPhoto, fetchMyPhotos } from '../../features/photos/photosThunk.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import PhotoItem from '../../components/PhotoItem/PhotoItem.tsx';
+import Typography from '@mui/material/Typography';
 
-const Home = () => {
+const MyPhotos = () => {
   const dispatch = useAppDispatch();
-  const photos = useAppSelector(selectPhoto)
+  const photos = useAppSelector(selectPhoto);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const userId = queryParams.get("user");
   const loading = useAppSelector(selectLoading);
 
   useEffect(() => {
-    dispatch(fetchPhotos())
-  }, [dispatch]);
+    if (userId) {
+      dispatch(fetchMyPhotos(userId));
+    }
+  }, [dispatch, userId]);
 
   const deletePhotoById = async (id: string) => {
     try {
       await dispatch(deletedPhoto(id));
-      dispatch(fetchPhotos())
+      await  dispatch(fetchMyPhotos(id));
     } catch (error) {
       console.error(error);
     }
   };
-
   return (
     <div>
       {loading ? (
@@ -34,8 +39,8 @@ const Home = () => {
         <>
           {photos.length > 0 ? (
             <Box sx={{padding: 2}}>
-              <h2 style={{color: 'darkviolet', marginLeft: '10px'}}>
-                All photos
+              <h2 style={ { color: 'darkviolet', marginLeft: '10px'}}>
+                My photos
               </h2>
               <Grid container spacing={2}>
                 {photos.map((photo) => (
@@ -56,4 +61,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MyPhotos;

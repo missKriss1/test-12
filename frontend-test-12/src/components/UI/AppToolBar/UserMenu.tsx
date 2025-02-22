@@ -35,6 +35,12 @@ const UserMenu: React.FC<Props> = ({ user }) => {
 
   return (
     <div>
+      <NavLink
+        to={"/add_new_photo"}
+        style={{ fontSize:"1.0rem", textDecoration: "none", border:'1px solid white', padding:'6px 8px', color: "inherit", marginTop: "10px", marginRight:'20px' }}
+      >
+        Add new photo
+      </NavLink>
       <Button
         color="inherit"
         onClick={handleClick}
@@ -51,10 +57,10 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <MenuItem onClick={hendelClose}>
             <NavLink
-              to={"/add_new_photo"}
+              to={`/photos?user=${user._id}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              Add new photo
+             My photos
             </NavLink>
           </MenuItem>
         </div>

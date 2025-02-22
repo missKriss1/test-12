@@ -6,6 +6,7 @@ import RegisterUser from './features/user/RegisterUser.tsx';
 import Home from './container/Home/Home.tsx';
 import PhotoByUser from './container/PhotoByUser/PhotoByUser.tsx';
 import FromPhoto from './container/FromPhoto/FromPhoto.tsx';
+import MyPhotos from './container/MyPhotos/MyPhotos.tsx';
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/login" element={<LoginUser />} />
             <Route path="/photos/user/:id" element={<PhotoByUser/>}/>
             <Route path="/add_new_photo" element={<FromPhoto/>}/>
+            <Route path="/photos" element={<MyPhotos />} />
           </Routes>
         </Container>
       </main>

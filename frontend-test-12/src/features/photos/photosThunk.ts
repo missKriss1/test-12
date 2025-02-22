@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import { GlobalError, Photo, PhotoMutation } from '../../types';
+import {  Photo, PhotoMutation, ValidationError } from '../../types';
 import { RootState } from '../../app/store.ts';
 import { isAxiosError } from 'axios';
 
-export const addNewPhoto = createAsyncThunk<Photo, PhotoMutation, { state: RootState; rejectValue: GlobalError }> (
+export const addNewPhoto = createAsyncThunk<Photo, PhotoMutation, { state: RootState; rejectValue: ValidationError }> (
   'photos/addNewPhoto',
   async (newPhoto:PhotoMutation, { getState, rejectWithValue }) =>{
     const token = getState().users.user?.token;
@@ -12,7 +12,15 @@ export const addNewPhoto = createAsyncThunk<Photo, PhotoMutation, { state: RootS
     const data = new FormData();
     data.append('title', newPhoto.title);
     if (newPhoto.image === null) {
-      return rejectWithValue({error: 'Image is required'});
+      return rejectWithValue({
+        message:'Image is required',
+        errors: {
+          image:{
+            message:'Image is required',
+            name:'image'
+          }
+      },
+      name: 'Image is required'});
     } else {
       data.append('image', newPhoto.image);
     }
@@ -27,17 +35,24 @@ export const addNewPhoto = createAsyncThunk<Photo, PhotoMutation, { state: RootS
         error.response &&
         error.response.status === 400
       ) {
-        return rejectWithValue(error.response.data as GlobalError);
+        return rejectWithValue(error.response.data as ValidationError);
       }
       throw error;
     }
   }
 )
 
-export const fetchPhotos = createAsyncThunk(
+export const fetchPhotos = createAsyncThunk<Photo[], void, { state: RootState; rejectValue: ValidationError }>(
   'photos/fetchPhotos',
-  async () =>{
-    const {data: photo} = await axiosApi.get('photos');
+  async (_, { getState }) =>{
+    const token = getState().users.user?.token;
+
+    if (!token) {
+      throw new Error("User not found");
+    }
+    const {data: photo} = await axiosApi.get<Photo[]>('/photos', {
+      headers: { Authorization: token },
+    });
     return photo || [];
   }
 )
@@ -51,6 +66,27 @@ export const fetchPhotoslById = createAsyncThunk(
     return response.data;
   },
 );
+
+export const fetchMyPhotos = createAsyncThunk<
+  Photo[],
+  string,
+  { state: RootState; rejectValue: ValidationError }
+>("photos/fetchMyPhotos", async (userId, { getState }) => {
+  const token = getState().users.user?.token;
+
+  if (!token) {
+    throw new Error("User not found");
+  }
+
+  const cocktailsRes = await axiosApi.get<Photo[]>(
+    `/photos?user=${userId}`,
+    {
+      headers: { Authorization: token },
+    },
+  );
+
+  return cocktailsRes.data || [];
+});
 
 export const deletedPhoto = createAsyncThunk<
   void,

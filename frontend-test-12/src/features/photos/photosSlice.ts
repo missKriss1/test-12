@@ -1,6 +1,6 @@
-import { GlobalError, Photo } from '../../types';
+import { Photo, ValidationError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchPhotos, fetchPhotoslById } from './photosThunk.ts';
+import { addNewPhoto, fetchMyPhotos, fetchPhotos, fetchPhotoslById } from './photosThunk.ts';
 import { RootState } from '../../app/store.ts';
 
 interface photosState{
@@ -9,7 +9,7 @@ interface photosState{
   fetchingLoading: boolean;
   creatingLoading: boolean;
   fetchError: boolean;
-  creatingError: GlobalError | null;
+  creatingError: ValidationError | null;
 }
 
 const initialState: photosState = {
@@ -53,6 +53,27 @@ const photosSlice = createSlice({
         state.photoByUser = photos;
       })
       .addCase(fetchPhotoslById.rejected, (state) => {
+        state.fetchError = true;
+      })
+      .addCase(addNewPhoto.pending, (state) => {
+        state.creatingLoading = true;
+        state.creatingError = null;
+      })
+      .addCase(addNewPhoto.fulfilled, (state) => {
+        state.creatingLoading = false;
+      })
+      .addCase(addNewPhoto.rejected, (state, { payload: error }) => {
+        state.creatingLoading = false;
+        state.creatingError = error || null;
+      })
+      .addCase(fetchMyPhotos.pending, (state) => {
+        state.fetchingLoading = true;
+      })
+      .addCase(fetchMyPhotos.fulfilled, (state, { payload: photo }) => {
+        state.fetchingLoading = false;
+        state.photos = photo;
+      })
+      .addCase(fetchMyPhotos.rejected, (state) => {
         state.fetchError = true;
       })
   }

@@ -59,9 +59,9 @@ const FromPhoto = () => {
     }
   };
 
-  const getFieldError = () => {
+  const getFieldError = (fieldName: string) => {
     try {
-      return selectError?.error;
+      return selectError?.errors[fieldName].message;
     } catch {
       return undefined;
     }
@@ -95,8 +95,8 @@ const FromPhoto = () => {
                   backgroundColor: "#f0f0f0",
                 },
               }}
-              error={!!getFieldError()}
-              helperText={getFieldError()}
+              error={!!getFieldError("title")}
+              helperText={getFieldError("title")}
             />
 
             <div className="mb-3">

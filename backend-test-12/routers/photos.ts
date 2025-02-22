@@ -33,9 +33,22 @@ photosRouter.post('/', auth, imagesUpload.single("image"), async (req, res, next
     }
 });
 
-photosRouter.get("/", async (req, res, next) => {
+photosRouter.get("/", auth, async (req, res, next) => {
+    let reqWithAuth = req as RequestWithUser;
+    const user = reqWithAuth.user
+
+    if (!user) {
+        res.status(400).send({error: 'User not found'});
+        return;
+    }
     try{
-        const photos = await Photo.find().populate('user')
+        const userPhotos = req.query.user;
+        let photos
+        if(userPhotos){
+            photos = await Photo.find({user: userPhotos}).populate('user')
+        }else{
+            photos = await Photo.find().populate('user')
+        }
         res.send(photos.reverse());
     }catch(e){
         next(e);
